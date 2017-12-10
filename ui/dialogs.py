@@ -262,6 +262,7 @@ class OptionsGroup(QGroupBox, Ui_OptionsGroup):
     _FIX_ZOOM = "fix_zoom"
     _APPLY_STYLES = "apply_styles"
     _SET_BACKGROUND_COLOR = "set_background_color"
+    _ADD_COPYRIGHT = "add_copyright"
     _MODE = "mode"
 
     class Mode(object):
@@ -281,7 +282,8 @@ class OptionsGroup(QGroupBox, Ui_OptionsGroup):
         _FIX_ZOOM_ENABLED: False,
         _APPLY_STYLES: True,
         _SET_BACKGROUND_COLOR: True,
-        _MODE: Mode.MANUAL
+        _MODE: Mode.MANUAL,
+        _ADD_COPYRIGHT: True
     }
 
     def __init__(self, settings, target_groupbox, zoom_change_handler):
@@ -295,6 +297,7 @@ class OptionsGroup(QGroupBox, Ui_OptionsGroup):
         self.chkLimitNrOfTiles.toggled.connect(lambda enabled: self.spinNrOfLoadedTiles.setEnabled(enabled))
         self.chkMergeTiles.toggled.connect(lambda enabled: self._set_option(self._MERGE_TILES, enabled))
         self.chkClipTiles.toggled.connect(lambda enabled: self._set_option(self._CLIP_TILES, enabled))
+        self.chkAddCopyright.toggled.connect(lambda enabled: self._set_option(self._ADD_COPYRIGHT, enabled))
         self.chkSetBackgroundColor.toggled.connect(self._on_bg_color_change)
         self.chkApplyStyles.toggled.connect(self._on_apply_styles_changed)
         self.chkLimitNrOfTiles.toggled.connect(lambda enabled: self._set_option(self._TILE_LIMIT_ENABLED, enabled))
@@ -342,6 +345,8 @@ class OptionsGroup(QGroupBox, Ui_OptionsGroup):
             self.rbZoomManual.setChecked(opt[self._FIX_ZOOM_ENABLED] == True or opt[self._FIX_ZOOM_ENABLED] == "true")
         if opt[self._APPLY_STYLES]:
             self.chkApplyStyles.setChecked(opt[self._APPLY_STYLES] == True or opt[self._APPLY_STYLES] == "true")
+        if opt[self._ADD_COPYRIGHT]:
+            self.chkAddCopyright.setChecked(opt[self._ADD_COPYRIGHT] == True or opt[self._ADD_COPYRIGHT] == "true")
         if opt[self._SET_BACKGROUND_COLOR]:
             val = opt[self._SET_BACKGROUND_COLOR]
             self.chkSetBackgroundColor.setChecked(val == True or val == "true")
